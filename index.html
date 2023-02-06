@@ -1,18 +1,81 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Chatbot with Dialogflow</title>
-    <script src="https://cdn.dialogflow.com/webchat/latest/webchat.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <style>
+      #chat-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 80vh;
+      }
+
+      #chat-messages {
+        width: 60%;
+        padding: 10px;
+        background-color: red;
+        color: white;
+        height: 80%;
+        overflow-y: scroll;
+      }
+
+      #chat-input {
+        width: 60%;
+        padding: 10px;
+        background-color: white;
+        color: red;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        font-size: 20px;
+      }
+
+      input[type="submit"] {
+        width: 20%;
+        padding: 10px;
+        background-color: red;
+        color: white;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <div class="chatbot">
-      <div class="chatbot-header">
-        <h1>Chatbot</h1>
+    <div id="chat-container">
+      <div id="chat-messages"></div>
+      <div id="chat-input">
+        <input type="text" id="input-message">
+        <input type="submit" value="Send" id="submit-button">
       </div>
-      <div id="webchat"></div>
     </div>
-    <script src="index.js"></script>
+    <script>
+      const messagesContainer = document.getElementById("chat-messages");
+      const inputMessage = document.getElementById("input-message");
+      const submitButton = document.getElementById("submit-button");
+
+      submitButton.addEventListener("click", function() {
+        const userMessage = inputMessage.value;
+        inputMessage.value = "";
+
+        const userMessageElement = document.createElement("div");
+        userMessageElement.innerHTML = userMessage;
+        userMessageElement.style.backgroundColor = "white";
+        userMessageElement.style.color = "red";
+        userMessageElement.style.padding = "10px";
+        userMessageElement.style.margin = "10px 0";
+        messagesContainer.appendChild(userMessageElement);
+
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Call the Dialogflow API to get the response for the user message
+        // ...
+      });
+    </script>
   </body>
 </html>
